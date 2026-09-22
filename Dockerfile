@@ -40,5 +40,5 @@ ENV HOST=0.0.0.0
 # Expose port
 EXPOSE 7860
 
-# Run with gunicorn — 1 worker, 4 threads, 300s timeout for long video jobs
-CMD ["gunicorn", "--bind", "0.0.0.0:7860", "--workers", "1", "--threads", "4", "--timeout", "300", "--access-logfile", "-", "app:app"]
+# Run with gunicorn — dynamic port for Render / Hugging Face / Cloud hosts
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-7860} --workers 1 --threads 4 --timeout 300 --access-logfile - app:app"]
